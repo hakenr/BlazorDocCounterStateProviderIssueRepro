@@ -1,0 +1,21 @@
+﻿@page "/counter"
+
+<p>Current count: <strong>@CounterStateProvider?.CurrentCount</strong></p>
+<button @onclick="IncrementCount">Increment</button>
+
+<hr />
+<SubCounter />
+
+@code {
+	[CascadingParameter]
+	private CounterStateProvider? CounterStateProvider { get; set; }
+
+	private async Task IncrementCount()
+	{
+		if (CounterStateProvider is not null)
+		{
+			CounterStateProvider.CurrentCount++;
+			await CounterStateProvider.SaveChangesAsync();
+		}
+	}
+}
